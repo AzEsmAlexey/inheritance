@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 import ru.netology.domain.Book;
 import ru.netology.domain.Product;
 import ru.netology.domain.Smartphone;
+import ru.netology.repository.NotFoundException;
 import ru.netology.repository.ProductRepository;
 
 public class ProductRepositoryTest {
@@ -54,5 +55,15 @@ public class ProductRepositoryTest {
         Product[] actual = repo.getAllItems();
 
         Assertions.assertArrayEquals(expected, actual);
+    }
+    @Test
+    public void testRemoveByIdNotExist() {
+        ProductRepository repo = new ProductRepository();
+        repo.save(item1);
+
+
+        Assertions.assertThrows(NotFoundException.class, () -> {
+            repo.removeById(666);
+        });
     }
 }
